@@ -97,7 +97,7 @@ export const Header: React.FC<Props> = props => {
         clearTimeout(timeoutRef.current);
       }
     };
-  }, []);
+  });
 
   return (
     <header className="todoapp__header">

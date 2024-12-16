@@ -20,6 +20,12 @@ export const Footer: React.FC<Props> = props => {
     handleDeleteAllCompleted,
   } = props;
 
+  const filters = [
+    { label: 'All', value: FilterTodosBy.All, href: '#/' },
+    { label: 'Active', value: FilterTodosBy.Active, href: '#/active' },
+    { label: 'Completed', value: FilterTodosBy.Completed, href: '#/completed' },
+  ];
+
   return (
     <footer className="todoapp__footer" data-cy="Footer">
       <span className="todo-count" data-cy="TodosCounter">
@@ -28,38 +34,19 @@ export const Footer: React.FC<Props> = props => {
 
       {/* Active link should have the 'selected' class */}
       <nav className="filter" data-cy="Filter">
-        <a
-          href="#/"
-          className={cn('filter__link', {
-            selected: filterBy === FilterTodosBy.All,
-          })}
-          data-cy="FilterLinkAll"
-          onClick={() => setFilteredBy(FilterTodosBy.All)}
-        >
-          All
-        </a>
-
-        <a
-          href="#/active"
-          className={cn('filter__link', {
-            selected: filterBy === FilterTodosBy.Active,
-          })}
-          data-cy="FilterLinkActive"
-          onClick={() => setFilteredBy(FilterTodosBy.Active)}
-        >
-          Active
-        </a>
-
-        <a
-          href="#/completed"
-          className={cn('filter__link', {
-            selected: filterBy === FilterTodosBy.Completed,
-          })}
-          data-cy="FilterLinkCompleted"
-          onClick={() => setFilteredBy(FilterTodosBy.Completed)}
-        >
-          Completed
-        </a>
+        {filters.map(filter => (
+          <a
+            key={filter.value}
+            href={filter.href}
+            className={cn('filter__link', {
+              selected: filterBy === filter.value,
+            })}
+            data-cy={`FilterLink${filter.label}`}
+            onClick={() => setFilteredBy(filter.value)}
+          >
+            {filter.label}
+          </a>
+        ))}
       </nav>
 
       <button
